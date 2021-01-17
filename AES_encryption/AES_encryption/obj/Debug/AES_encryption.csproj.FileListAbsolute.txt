@@ -1,0 +1,10 @@
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\bin\Debug\AES_encryption.exe.config
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\bin\Debug\AES_encryption.exe
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\bin\Debug\AES_encryption.pdb
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\obj\Debug\AES_encryption.csprojAssemblyReference.cache
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\obj\Debug\AES_encryption.Form1.resources
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\obj\Debug\AES_encryption.Properties.Resources.resources
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\obj\Debug\AES_encryption.csproj.GenerateResource.cache
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\obj\Debug\AES_encryption.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\obj\Debug\AES_encryption.exe
+C:\Users\admin\source\repos\AES_encryption\AES_encryption\obj\Debug\AES_encryption.pdb
