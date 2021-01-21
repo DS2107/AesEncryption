@@ -30,7 +30,7 @@ namespace AES_encryption
         // Список файлов c расшиерением aes
         List<string> FilesAES;
 
-        
+
         // полный путь выбранной папки
         string fullname_saveFile;
 
@@ -42,7 +42,7 @@ namespace AES_encryption
             // ставим для пароля *
             textBox_password.PasswordChar = '*';
 
-           // Что бы брать только один файл
+            // Что бы брать только один файл
             SelectFile.Multiselect = true;
 
             // Фильтр файлов
@@ -57,7 +57,7 @@ namespace AES_encryption
         }
         public void StartDecryptThread()
         {
-           
+
 
             int count = 0;
             foreach (var file in MyFiles)
@@ -68,17 +68,18 @@ namespace AES_encryption
                 }
             }
             MessageBox.Show("В файлах которые вы указали, были найдено: " + count + " .aes файлов");
-           if(count == 0) {
-               
+            if (count == 0)
+            {
+
                 textBox_password.Invoke((MethodInvoker)(() => textBox_password.Text = ""));
             }
             else
             {
-               
+
                 CheckDescryption(MyFiles);
                 count = 0;
             }
-            
+
         }
         private void button_openFile_Click(object sender, EventArgs e)
         {
@@ -90,23 +91,23 @@ namespace AES_encryption
             else
             {
                 listBox_SelectFiles.Items.Clear();
-               foreach(var file in SelectFile.FileNames.ToList())
+                foreach (var file in SelectFile.FileNames.ToList())
                 {
                     listBox_SelectFiles.Items.Add(Path.GetFileName(file));
                     MyFiles = SelectFile.FileNames.ToList();
                 }
-                   
+
 
             }
-            
+
         } // button_openFile_Click
 
         // Штфрование
         private void button_Encryption_Click(object sender, EventArgs e)
         {
-            
+
             Thread thread = new Thread(StartEncryptThread);
-             thread.Start();
+            thread.Start();
         } // button_Encryption_Click
 
         // Дешифровка
@@ -116,7 +117,7 @@ namespace AES_encryption
                 return;
             Thread thread = new Thread(StartDecryptThread);
             thread.Start();
-            
+
 
         } // button_NonEncryption_Click
 
@@ -132,13 +133,13 @@ namespace AES_encryption
             else
             {
                 FilesAES = new List<string>();
-                foreach(var file in MyFiles)
+                foreach (var file in MyFiles)
                 {
-                    
+
                     if (Path.GetExtension(file) == ".aes")
                     {
                         FilesAES.Add(file);
-                       // MyFiles.Remove(file);
+                        // MyFiles.Remove(file);
                     }
 
                 }
@@ -154,14 +155,18 @@ namespace AES_encryption
                     int i = 0;
                     progressBar_encryption.Invoke((MethodInvoker)(() => progressBar_encryption.Maximum = FilesAES.Count));
                     progressBar_encryption.Minimum = 0;
-                    bool flag = true ;
+                    bool flag = true;
+                    button_Encryption.Enabled = false;
+                    button_openFile.Enabled = false;
+                    button_SelectFolder.Enabled = false;
                     foreach (var file in FilesAES)
                     {
-                        
+
                         fullname_saveFile = saveFileDesc.SelectedPath;
                         fullname_saveFile = fullname_saveFile + @"\" + Path.GetFileName(file);
                         fullname_saveFile = fullname_saveFile.Remove(fullname_saveFile.Length - 4);
-                       if( myEncrypt.FileDecrypt(file, fullname_saveFile, textBox_password.Text))
+
+                        if (myEncrypt.FileDecrypt(file, fullname_saveFile, textBox_password.Text))
                         {
                             i++;
                             progressBar_encryption.Invoke((MethodInvoker)(() => progressBar_encryption.Value = i));
@@ -177,8 +182,11 @@ namespace AES_encryption
                             label_problem.Invoke((MethodInvoker)(() => label_problem.Text = "Проблемы с паролем..."));
                             flag = false;
                         }
-                  
+
                     }
+                    button_Encryption.Enabled = true;
+                    button_openFile.Enabled = true;
+                    button_SelectFolder.Enabled = true;
                     i = 0;
                     Thread.Sleep(3000);
                     progressBar_encryption.Invoke((MethodInvoker)(() => progressBar_encryption.Value = 0));
@@ -194,9 +202,9 @@ namespace AES_encryption
                         label_problem.ForeColor = Color.Red;
                         label_problem.Invoke((MethodInvoker)(() => label_problem.Text = "Дешифровка неудалась..."));
                         textBox_password.Invoke((MethodInvoker)(() => textBox_password.Text = ""));
-                      //  listBox_SelectFiles.Invoke((MethodInvoker)(() => listBox_SelectFiles.Items.Clear()));
+                        //  listBox_SelectFiles.Invoke((MethodInvoker)(() => listBox_SelectFiles.Items.Clear()));
                     }
-                   
+
 
                 }
 
@@ -235,28 +243,34 @@ namespace AES_encryption
                         if (myreg)
                         {
                             label_problem.ForeColor = Color.Green;
-                           label_problem.Invoke((MethodInvoker)(() => label_problem.Text = "Идет процес шифрования ждите..."));
+                            label_problem.Invoke((MethodInvoker)(() => label_problem.Text = "Идет процес шифрования ждите..."));
                             progressBar_encryption.Invoke((MethodInvoker)(() => progressBar_encryption.Maximum = MyFiles.Count));
                             progressBar_encryption.Minimum = 0;
                             int i = 0;
                             // Шифруем
-                            foreach(var file in MyFiles)
+                            button_NonEncryption.Enabled = false;
+                            button_openFile.Enabled = false;
+                            button_SelectFolder.Enabled = false;
+                            foreach (var file in MyFiles)
                             {
                                 i++;
                                 myEncrypt.FileEncrypt(file, textBox_password.Text);
                                 progressBar_encryption.Invoke((MethodInvoker)(() => progressBar_encryption.Value = i));
 
-                              // progressBar_encryption.Value = i;
+                                // progressBar_encryption.Value = i;
                             }
                             i = 0;
                             Thread.Sleep(3000);
+                            button_NonEncryption.Enabled = true;
+                            button_openFile.Enabled = true;
+                            button_SelectFolder.Enabled = true;
                             progressBar_encryption.Invoke((MethodInvoker)(() => progressBar_encryption.Value = 0));
                             label_problem.ForeColor = Color.Green;
                             label_problem.Invoke((MethodInvoker)(() => label_problem.Text = "Все удчано, обработанно файлов - " + MyFiles.Count));
                             textBox_password.Invoke((MethodInvoker)(() => textBox_password.Text = ""));
                             listBox_SelectFiles.Invoke((MethodInvoker)(() => listBox_SelectFiles.Items.Clear()));
                             MyFiles.Clear();
-                            
+
                         } //if
                         else
                         {
@@ -272,19 +286,19 @@ namespace AES_encryption
         {
             // указать папку для дешифровки файла 
             FolderBrowserDialog saveFileDesc = new FolderBrowserDialog();
-           
-            if(saveFileDesc.ShowDialog() == DialogResult.Cancel)
+
+            if (saveFileDesc.ShowDialog() == DialogResult.Cancel)
             {
                 return;
             }
             MyFiles = Directory.GetFiles(saveFileDesc.SelectedPath).ToList();
 
-            foreach(var file in MyFiles)
+            foreach (var file in MyFiles)
             {
                 listBox_SelectFiles.Items.Add(Path.GetFileName(file));
 
             }
-           
+
         } // button_SelectFolder_Click
     }
 }
