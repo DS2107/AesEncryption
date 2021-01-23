@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label_problem = new System.Windows.Forms.Label();
-            this.label_infoFile = new System.Windows.Forms.Label();
             this.label_infoFile_tag = new System.Windows.Forms.Label();
             this.textBox_password = new System.Windows.Forms.TextBox();
             this.button_openFile = new System.Windows.Forms.Button();
@@ -41,6 +40,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button_SelectFolder = new System.Windows.Forms.Button();
             this.listBox_SelectFiles = new System.Windows.Forms.ListBox();
+            this.button_HashFile = new System.Windows.Forms.Button();
+            this.checkBoxFileKEY = new System.Windows.Forms.CheckBox();
+            this.button_searchKEY = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label_problem
@@ -53,16 +55,6 @@
             this.label_problem.Name = "label_problem";
             this.label_problem.Size = new System.Drawing.Size(100, 20);
             this.label_problem.TabIndex = 2;
-            // 
-            // label_infoFile
-            // 
-            this.label_infoFile.AutoSize = true;
-            this.label_infoFile.Font = new System.Drawing.Font("Microsoft YaHei UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label_infoFile.Location = new System.Drawing.Point(527, 12);
-            this.label_infoFile.Name = "label_infoFile";
-            this.label_infoFile.Size = new System.Drawing.Size(200, 20);
-            this.label_infoFile.TabIndex = 1;
-            this.label_infoFile.Text = "Сначала выберете файл(ы)";
             // 
             // label_infoFile_tag
             // 
@@ -98,7 +90,7 @@
             this.button_Encryption.Font = new System.Drawing.Font("Microsoft YaHei UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button_Encryption.Location = new System.Drawing.Point(395, 65);
             this.button_Encryption.Name = "button_Encryption";
-            this.button_Encryption.Size = new System.Drawing.Size(158, 33);
+            this.button_Encryption.Size = new System.Drawing.Size(115, 53);
             this.button_Encryption.TabIndex = 3;
             this.button_Encryption.Text = "Зашифровать";
             this.button_Encryption.UseVisualStyleBackColor = true;
@@ -107,9 +99,9 @@
             // button_NonEncryption
             // 
             this.button_NonEncryption.Font = new System.Drawing.Font("Microsoft YaHei UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_NonEncryption.Location = new System.Drawing.Point(569, 65);
+            this.button_NonEncryption.Location = new System.Drawing.Point(613, 65);
             this.button_NonEncryption.Name = "button_NonEncryption";
-            this.button_NonEncryption.Size = new System.Drawing.Size(158, 33);
+            this.button_NonEncryption.Size = new System.Drawing.Size(118, 53);
             this.button_NonEncryption.TabIndex = 4;
             this.button_NonEncryption.Text = "Дешифровать";
             this.button_NonEncryption.UseVisualStyleBackColor = true;
@@ -164,14 +156,49 @@
             this.listBox_SelectFiles.Size = new System.Drawing.Size(336, 96);
             this.listBox_SelectFiles.TabIndex = 7;
             // 
+            // button_HashFile
+            // 
+            this.button_HashFile.Font = new System.Drawing.Font("Microsoft YaHei UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_HashFile.Location = new System.Drawing.Point(12, 183);
+            this.button_HashFile.Name = "button_HashFile";
+            this.button_HashFile.Size = new System.Drawing.Size(336, 33);
+            this.button_HashFile.TabIndex = 8;
+            this.button_HashFile.Text = "Генерация файл-ключа&";
+            this.button_HashFile.UseVisualStyleBackColor = true;
+            this.button_HashFile.Click += new System.EventHandler(this.button_HashFile_Click);
+            // 
+            // checkBoxFileKEY
+            // 
+            this.checkBoxFileKEY.AutoSize = true;
+            this.checkBoxFileKEY.Location = new System.Drawing.Point(529, 11);
+            this.checkBoxFileKEY.Name = "checkBoxFileKEY";
+            this.checkBoxFileKEY.Size = new System.Drawing.Size(198, 21);
+            this.checkBoxFileKEY.TabIndex = 9;
+            this.checkBoxFileKEY.Text = "Использовать файл ключ";
+            this.checkBoxFileKEY.UseVisualStyleBackColor = true;
+            this.checkBoxFileKEY.CheckStateChanged += new System.EventHandler(this.checkBoxFileKEY_CheckStateChanged);
+            // 
+            // button_searchKEY
+            // 
+            this.button_searchKEY.Font = new System.Drawing.Font("Microsoft YaHei UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_searchKEY.Location = new System.Drawing.Point(516, 65);
+            this.button_searchKEY.Name = "button_searchKEY";
+            this.button_searchKEY.Size = new System.Drawing.Size(91, 53);
+            this.button_searchKEY.TabIndex = 10;
+            this.button_searchKEY.Text = "Найти ключ";
+            this.button_searchKEY.UseVisualStyleBackColor = true;
+            this.button_searchKEY.Click += new System.EventHandler(this.button_searchKEY_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 210);
+            this.ClientSize = new System.Drawing.Size(743, 222);
+            this.Controls.Add(this.button_searchKEY);
+            this.Controls.Add(this.checkBoxFileKEY);
+            this.Controls.Add(this.button_HashFile);
             this.Controls.Add(this.listBox_SelectFiles);
             this.Controls.Add(this.label_infoFile_tag);
-            this.Controls.Add(this.label_infoFile);
             this.Controls.Add(this.label_problem);
             this.Controls.Add(this.button_SelectFolder);
             this.Controls.Add(this.label1);
@@ -194,7 +221,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label label_infoFile;
         private System.Windows.Forms.Label label_infoFile_tag;
         private System.Windows.Forms.TextBox textBox_password;
         private System.Windows.Forms.Button button_openFile;
@@ -206,6 +232,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_SelectFolder;
         private System.Windows.Forms.ListBox listBox_SelectFiles;
+        private System.Windows.Forms.Button button_HashFile;
+        private System.Windows.Forms.CheckBox checkBoxFileKEY;
+        private System.Windows.Forms.Button button_searchKEY;
     }
 }
 
